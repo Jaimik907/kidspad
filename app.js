@@ -9,15 +9,19 @@ const authRoute = require('./src/auth/router');
 // const port = process.env.PORT;
 
 const app = express();
-let corsOption = {
-  origin: 'https//localhost:3000',
+const corsOpts = {
+  origin: '*',
+
+  methods: ['GET', 'POST'],
+
+  allowedHeaders: ['Content-Type'],
 };
 
+app.use(cors(corsOpts));
 app.use(express.json());
-app.use(cors(corsOption));
 
 app.use('/users', userRoute);
-app.use('/auth',authRoute);
+app.use('/auth', authRoute);
 
 sequelize
   .sync()
